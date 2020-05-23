@@ -7,6 +7,8 @@
         private $tpl;
         private $options = [];
         private $defaults = [
+            "header"=>true,
+            "footer"=>true,
             "data"=>[]
         ];
 
@@ -24,7 +26,7 @@
             
             $this->tpl = new Tpl;
 
-            $this->tpl->draw("header");
+            if($this->options["header"] === true) $this->tpl->draw("header");
 
         }
 
@@ -35,13 +37,14 @@
         }
 
         public function setTpl($nome, $data = array(), $retunHTML = false){
+            
             $this->setData($data);
 
-            return $this->tpl->draw("index");
+            return $this->tpl->draw($nome, $retunHTML);
         }
 
         public function __destruct() {
-            $this->tpl->draw("footer");
+            if($this->options["footer"] === true) $this->tpl->draw("footer");
 
         }
     }
